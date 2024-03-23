@@ -1,6 +1,20 @@
 # PeasyVel System
 By Abdul Salam
 
+# Table of Contents
+1. [Introduction](#introduction)
+2. [Technical Stack](#technical-stack)
+3. [Installation and Setup](#installation-and-setup)
+4. [API Endpoints](#api-endpoints)
+5. [API Specifications](#api-specifications)
+   - [Daily Records API](#daily-records-api)
+   - [Users API](#users-api)
+6. [Dashboard Views](#dashboard-views)
+7. [Background Jobs](#background-jobs)
+8. [Event Listener](#event-listener)
+9. [Database Optimization](#database-optimization)
+10. [Data Visualization](#data-visualization)
+
 ## Introduction
 This Laravel project is designed to efficiently handle and manage user data retrieved from an external API. It records and analyzes population statistics and average data based on user gender, offering a comprehensive overview of user demographics.
 
