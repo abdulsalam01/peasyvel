@@ -1,66 +1,114 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# PeasyVel System
+By Abdul Salam
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Introduction
+This Laravel project is designed to efficiently handle and manage user data retrieved from an external API. It records and analyzes population statistics and average data based on user gender, offering a comprehensive overview of user demographics.
 
-## About Laravel
+## Technical Stack
+- **PHP Version**: 8.2
+- **Framework**: Laravel 11
+- **Database**: PostgreSQL is utilized as the primary database for persistent data storage.
+- **Caching**: Redis serves as an in-memory database to enhance performance and speed up data retrieval.
+- **Background Processing**: The system uses a queue and task scheduler to execute jobs in the background, ensuring efficient data handling and processing.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Installation and Setup
+1. Clone this repository to your local machine.
+2. Navigate to the project directory and execute `composer install` to install dependencies.
+3. Initialize the database structure by running `php artisan migrate`.
+4. Start the application with `php artisan serve`.
+5. Once these steps are completed, the application is ready for use.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## API Endpoints
+- **User Data**: Access user data at `/api/users`, which provides data pagination limited to 20 entries per page.
+- **Daily Records**: Access daily records at `/api/daily_records`. This endpoint also supports query parameters like `?today=true` or `?latest=true` to retrieve the latest or today's data, respectively, with a limit of 20 entries.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## API Specifications
 
-## Learning Laravel
+### Daily Records API
+- **Endpoint**: `{base_url}/api/daily_records?latest=true`
+- **Method**: GET
+- **Description**: Retrieves the latest daily records data.
+- **Response Example**:
+  ```json
+  {
+    "id": "e6a09025-9d77-47c2-be0a-f9f06fecd51b",
+    "date": "2024-03-21 15:02:45",
+    "male_count": 7,
+    "female_count": 7,
+    "male_avg_age": "47.5",
+    "female_avg_age": "56.75"
+  }
+  ```
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### Users API
+- **Endpoint**: `{base_url}/api/users`
+- **Method**: GET
+- **Description**: Fetches user data with pagination, limited to 20 entries per request.
+- **Response Example**:
+  ```json
+  {
+    "current_page": 1,
+    "data": [
+      {
+        "id": "ae3bf311-8c0a-4ad1-a83a-7edc40dcf4c2",
+        "gender": "female",
+        "name": "{\"last\": \"Daničić\", \"first\": \"Marina\", \"title\": \"Mrs\"}",
+        "location": "{\"city\": \"Lapovo\", \"state\": \"North Banat\", \"street\": {\"name\": \"Zlatanovićev Sokak\", \"number\": 3078}, \"country\": \"Serbia\", \"postcode\": 28419, \"timezone\": {\"offset\": \"-6:00\", \"description\": \"Central Time (US & Canada), Mexico City\"}, \"coordinates\": {\"latitude\": \"25.2061\", \"longitude\": \"-135.8494\"}}",
+        "age": 56,
+        "created_at": "2024-03-21T15:02:01.000000Z",
+        "updated_at": "2024-03-21T15:02:01.000000Z"
+      },
+      // Additional user data truncated for brevity
+    ],
+    "first_page_url": "http://localhost:8000/api/users?page=1",
+    "from": 1,
+    "last_page": 1,
+    "last_page_url": "http://localhost:8000/api/users?page=1",
+    "links": [
+      {
+        "url": null,
+        "label": "&laquo; Previous",
+        "active": false
+      },
+      {
+        "url": "http://localhost:8000/api/users?page=1",
+        "label": "1",
+        "active": true
+      },
+      {
+        "url": null,
+        "label": "Next &raquo;",
+        "active": false
+      }
+    ],
+    "next_page_url": null,
+    "path": "http://localhost:8000/api/users",
+    "per_page": 20,
+    "prev_page_url": null,
+    "to": 14,
+    "total": 14
+  }
+  ```
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+These API endpoints provide a structured way to access and interact with the user and daily records data. The responses are structured in JSON format, offering a clear and efficient means of data retrieval.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Dashboard Views
+- **User Dashboard**: View user data at `/view/users`, which offers a comprehensive user interface.
+- **Daily Records Dashboard**: View daily records at `/view/daily_records`, which displays aggregated user data.
 
-## Laravel Sponsors
+## Background Jobs
+- A scheduled job runs hourly to fetch data from an external service and store it in the users table.
+- At the end of each day, the system calculates averages and population data for users, storing the results in the daily_records table.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+## Event Listener
+- The system includes an event listener that monitors changes in the users table. Any modification triggers a recalculation of the average user age and updates the daily_records table accordingly, with a limit of 20 records per date.
 
-### Premium Partners
+## Database Optimization
+- Several fields in the users table, such as gender and created_at, are indexed to optimize query performance.
+- The date field in the daily_records table is also indexed for faster query execution.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+## Data Visualization
+- The application features a JavaScript-generated chart that integrates with the latest or today's data from the daily_records API, offering real-time insights.
+- A dynamic list of users is available with search functionality that operates client-side to enhance performance and limit data requests, with pagination set to 20 entries per page.
 
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+This system is designed to be robust, efficient, and easy to use, providing a comprehensive solution for managing and analyzing user data.
