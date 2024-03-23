@@ -17,10 +17,11 @@ class JobsUserRunner implements ShouldQueue
     /**
      * Create a new job instance.
      */
-    public function __construct(
-    )
+    private $runner;
+
+    public function __construct()
     {
-        //
+        $this->runner = new UserController(); // Invoke.
     }
 
     /**
@@ -28,7 +29,6 @@ class JobsUserRunner implements ShouldQueue
      */
     public function handle(): void
     {
-        $runner = new UserController(); // Invoke.
-        $runner->store();
+        $this->runner->store();
     }
 }

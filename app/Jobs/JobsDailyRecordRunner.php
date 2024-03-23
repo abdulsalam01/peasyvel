@@ -17,9 +17,11 @@ class JobsDailyRecordRunner implements ShouldQueue
     /**
      * Create a new job instance.
      */
+    private $runner;
+
     public function __construct()
     {
-        //
+        $this->runner = new DailyRecordController(); // Invoke.
     }
 
     /**
@@ -27,7 +29,6 @@ class JobsDailyRecordRunner implements ShouldQueue
      */
     public function handle(): void
     {
-        $runner = new DailyRecordController(); // Invoke.
-        $runner->store();
+        $this->runner->store();
     }
 }
