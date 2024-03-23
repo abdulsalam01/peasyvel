@@ -10,11 +10,14 @@ By Abdul Salam
    - [Daily Records API](#daily-records-api)
    - [Users API](#users-api)
 6. [Dashboard Views](#dashboard-views)
-7. [Background Jobs](#background-jobs)
-8. [Event Listener](#event-listener)
-9. [Database Optimization](#database-optimization)
-10. [Data Visualization](#data-visualization)
-
+7. [How It Looks Like](#how-it-looks-like)
+   - [Dashboard View](#dashboard-view-base_urlview)
+   - [User View](#user-view-base_urlviewusers)
+   - [Daily Record View](#daily-record-view-base_urlviewdaily_reports)
+8. [Background Jobs](#background-jobs)
+9. [Event Listener](#event-listener)
+10. [Database Optimization](#database-optimization)
+11. [Data Visualization](#data-visualization)
 ## Introduction
 This Laravel project is designed to efficiently handle and manage user data retrieved from an external API. It records and analyzes population statistics and average data based on user gender, offering a comprehensive overview of user demographics.
 
@@ -109,6 +112,23 @@ These API endpoints provide a structured way to access and interact with the use
 ## Dashboard Views
 - **User Dashboard**: View user data at `/view/users`, which offers a comprehensive user interface.
 - **Daily Records Dashboard**: View daily records at `/view/daily_records`, which displays aggregated user data.
+
+## How It Looks Like
+Below are visual representations of various views within the application, providing insights into the user interface and overall user experience.
+
+### Dashboard View (`base_url/view`)
+![Welcome Page](public/docs/welcome.png) 
+This image represents the welcome page of the dashboard, serving as the entry point for users to navigate through the application.
+
+### User View (`base_url/view/users`)
+![User Page](public/docs/user.png) 
+This image illustrates the user view, where detailed information about users is displayed, including their data and actions that can be performed.
+
+### Daily Record View (`base_url/view/daily_reports`)
+![Daily Record Page](public/docs/daily_record.png) 
+This image shows the daily record view, presenting aggregated data and statistics based on user records, which are crucial for analytical purposes.
+
+These visuals provide a clear understanding of the application's layout and functionalities, enhancing the user's interaction with the system.
 
 ## Background Jobs
 - A scheduled job runs hourly to fetch data from an external service and store it in the users table.
